@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国毒蛇咬伤急救指南</title>
+    <style>
+        /* CSS 变量，方便统一管理主题颜色 */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --danger-color: #ff4757;
+            --warning-color: #ff9f1a;
+            --safe-color: #2ed573;
+            --light-bg: #f8f9fa;
+            --card-bg: white;
+            --text-dark: #333;
+            --text-light: #666;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .emergency-banner {
+            background: var(--danger-color);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(255,71,87,0.4);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255,71,87,0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 20px rgba(255,71,87,0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255,71,87,0.4); }
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .action-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .action-card .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .search-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-btn {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: #5a67d8;
+            transform: scale(1.05);
+        }
+        
+        .snake-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .snake-card {
+            background: var(--light-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .snake-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .snake-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: var(--border-color);
+        }
+        
+        .snake-info {
+            padding: 15px;
+            flex-grow: 1;
+        }
+        
+        .snake-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .snake-toxin-type {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        .danger-level {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .danger-high { background: var(--danger-color); color: white; }
+        .danger-medium { background: var(--warning-color); color: white; }
+        .danger-low { background: var(--safe-color); color: white; }
+        
+        .search-no-result {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            animation: slideInUp 0.4s ease-out;
+        }
+        
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+        .close-btn:hover {
+            color: var(--text-dark);
+        }
+        
+        .emergency-steps {
+            background: #ffe0e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid var(--danger-color);
+        }
+        
+        .symptoms-list {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .donate-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .donate-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .donate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: white;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐍 中国毒蛇咬伤急救指南</h1>
+            <p class="subtitle">快速识别 · 紧急处理 · 挽救生命</p>
+        </header>
+        
+        <div class="emergency-banner">
+            ⚠️ 紧急提醒：被蛇咬伤后请立即拨打120，本指南仅供参考！
+        </div>
+        
+        <div class="quick-actions">
+            <div class="action-card" data-action="guide">
+                <div class="icon">🚨</div>
+                <h3>紧急处理指南</h3>
+                <p>立即查看急救步骤</p>
+            </div>
+            <div class="action-card" data-action="symptoms">
+                <div class="icon">🔍</div>
+                <h3>症状识别</h3>
+                <p>通过症状判断蛇种</p>
+            </div>
+            <div class="action-card" data-action="map">
+                <div class="icon">🏥</div>
+                <h3>附近医院</h3>
+                <p>查找有血清的医院</p>
+            </div>
+        </div>
+        
+        <section class="search-section">
+            <h2>快速搜索毒蛇种类</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="输入蛇的特征、颜色或地区...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            
+            <h3>常见毒蛇种类</h3>
+            <!-- 蛇类卡片将由JavaScript动态生成 -->
+            <div class="snake-grid" id="snakeGrid"></div>
+        </section>
+        
+        <div class="donate-section">
+            <h2>💝 支持我们</h2>
+            <p>如果这个工具帮助到了您，欢迎打赏支持</p>
+            <p>您的支持让我们做得更好！</p>
+            <button class="donate-btn" id="donateBtn">打赏支持</button>
+        </div>
+
+        <footer>
+            <p>本指南信息仅供参考，请以专业医疗机构意见为准。</p>
+            <p>信息来源参考：中国疾控中心、© 2024 YourName</p>
+        </footer>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">×</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        // 1. 数据中心：将所有蛇的数据集中管理
+        const snakeData = {
+            cobra: {
+                name: '舟山眼镜蛇',
+                danger: '剧毒',
+                toxin: '混合毒素（神经毒素为主）',
+                symptoms: '局部红肿、剧痛、组织坏死，随后出现视力模糊、呼吸困难、昏迷等全身症状。',
+                serum: '抗眼镜蛇毒血清',
+                distribution: '中国长江以南各省，常见于丘陵、农田、村舍附近。',
+                img: 'https://via.placeholder.com/200x150.png?text=眼镜蛇'
+            },
+            viper: {
+                name: '尖吻蝮（五步蛇）',
+                danger: '剧毒',
+                toxin: '血循毒素',
+                symptoms: '伤口剧痛、肿胀发展迅速，流血不止，常有血泡，可导致全身出血和组织大面积坏死。',
+                serum: '抗五步蛇毒血清',
+                distribution: '长江以南山区、安徽、重庆、浙江等地。',
+                img: 'https://via.placeholder.com/200x150.png?text=五步蛇'
+            },
+            bamboo: {
+                name: '白唇竹叶青',
+                danger: '中毒',
+                toxin: '血循毒素',
+                symptoms: '伤口灼痛、肿胀明显但通常不致命，可见焦痕状牙印，可能出血。',
+                serum: '抗竹叶青蛇毒血清',
+                distribution: '南方各省的竹林、灌木丛、溪边草丛。',
+                img: 'https://via.placeholder.com/200x150.png?text=竹叶青'
+            },
+            krait: {
+                name: '银环蛇',
+                danger: '剧毒',
+                toxin: '神经毒素',
+                symptoms: '伤口几乎不痛不肿，极易被忽略。数小时后出现头晕、眼睑下垂、呼吸麻痹，是致死率最高的毒蛇之一。',
+                serum: '抗银环蛇毒血清',
+                distribution: '长江以南的水域附近、田边、路旁。',
+                img: 'https://via.placeholder.com/200x150.png?text=银环蛇'
+            },
+            kingcobra: {
+                name: '眼镜王蛇',
+                danger: '剧毒',
+                toxin: '混合毒素（神经毒素为主）',
+                symptoms: '排毒量巨大，发作极快。兼具眼镜蛇和五步蛇的症状，死亡率极高。',
+                serum: '抗眼镜王蛇毒血清（稀有）',
+                distribution: '华南和西南地区，是世界上最大的毒蛇。',
+                img: 'https://via.placeholder.com/200x150.png?text=眼镜王蛇'
+            },
+            russellsviper: {
+                name: '圆斑蝰（金钱豹）',
+                danger: '剧毒',
+                toxin: '血循毒素',
+                symptoms: '异常剧痛和肿胀，伤口流血不止，可导致急性肾衰竭和全身出血。',
+                serum: '抗蝰蛇毒血清',
+                distribution: '华南、福建、台湾等地。',
+                img: 'https://via.placeholder.com/200x150.png?text=圆斑蝰'
+            }
+        };
+
+        const dangerClassMap = {
+            '剧毒': 'danger-high',
+            '中毒': 'danger-medium',
+            '微毒': 'danger-low'
+        };
+        
+        // 2. DOM 元素缓存
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const snakeGrid = document.getElementById('snakeGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        // 3. 核心功能函数
+        const showModal = (content) => {
+            modalContent.innerHTML = content;
+            modal.style.display = 'block';
+        };
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+        };
+
+        const showEmergencyGuide = () => {
+            const content = `
+                <h2>🚨 毒蛇咬伤紧急处理</h2>
+                <div class="emergency-steps">
+                    <h3>立即执行以下步骤（“冷静、记、打、脱、动、洗”）</h3>
+                    <ol>
+                        <li><strong>保持冷静</strong>：切勿慌张奔跑，减少活动，以减缓毒素扩散。</li>
+                        <li><strong>记住特征</strong>：尽可能记住蛇的颜色、花纹、头部形状，或用手机拍照。</li>
+                        <li><strong>立即拨打120</strong>：清楚说明被毒蛇咬伤及所在位置。</li>
+                        <li><strong>脱去饰品</strong>：立即取下伤肢上的戒指、手镯、手表等，以防后续肿胀无法取出。</li>
+                        <li><strong>制动伤肢</strong>：用夹板或树枝固定伤肢，保持低于心脏水平。</li>
+                        <li><strong>清洗伤口</strong>：可用大量清水或肥皂水冲洗伤口，但不要挤压或切割伤口。</li>
+                    </ol>
+                </div>
+                <div style="background: var(--danger-color); color: white; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <h3>⚠️ 致命错误，千万不要做：</h3>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>❌ 用嘴吸毒：可能导致施救者中毒。</li>
+                        <li>❌ 用刀切开伤口：可能加重损伤和感染。</li>
+                        <li>❌ 用绳子紧勒：可能导致肢体缺血坏死。</li>
+                        <li>❌ 饮酒或咖啡：会加速血液循环，使毒素扩散更快。</li>
+                        <li>❌ 涂抹草药或偏方：无效且可能导致感染。</li>
+                    </ul>
+                </div>
+            `;
+            showModal(content);
+        };
+        
+        const identifyBySymptoms = () => {
+            const content = `
+                <h2>🔍 通过症状识别毒蛇类型</h2>
+                <div class="symptoms-list">
+                    <h3>神经性毒素症状（发作慢，但更致命）</h3>
+                    <ul>
+                        <li>伤口通常不痛不肿，易被忽视。</li>
+                        <li>眼睑下垂、视力模糊、复视。</li>
+                        <li>说话困难、吞咽困难、流口水。</li>
+                        <li>最终导致呼吸肌麻痹，呼吸衰竭死亡。</li>
+                        <li><strong>典型蛇种：</strong>银环蛇、金环蛇、海蛇。</li>
+                    </ul>
+                </div>
+                <div class="symptoms-list">
+                    <h3>血循毒素症状（发作快，症状明显）</h3>
+                    <ul>
+                        <li>伤口局部剧痛、烧灼感、迅速肿胀。</li>
+                        <li>皮下出血、起水泡、血泡，组织发黑坏死。</li>
+                        <li>伤口流血不止，甚至七窍流血。</li>
+                        <li>可能导致心律失常、休克、肾衰竭。</li>
+                        <li><strong>典型蛇种：</strong>蝮蛇、五步蛇、竹叶青、蝰蛇。</li>
+                    </ul>
+                </div>
+                <div class="symptoms-list">
+                    <h3>混合毒素症状</h3>
+                    <ul>
+                        <li>同时出现以上两种症状，病情复杂凶险。</li>
+                        <li><strong>典型蛇种：</strong>眼镜蛇、眼镜王蛇。</li>
+                    </ul>
+                </div>
+            `;
+            showModal(content);
+        };
+        
+        const showHospitalMap = () => {
+            alert('即将跳转到地图，为您查找附近有抗蛇毒血清的医院...');
+            // 使用百度地图API进行搜索，提供更实用的功能
+            window.open('https://map.baidu.com/search/附近有抗蛇毒血清的医院', '_blank');
+        };
+
+        const showSnakeDetail = (snakeKey) => {
+            const snake = snakeData[snakeKey];
+            if (!snake) return;
+
+            const dangerClass = dangerClassMap[snake.danger] || 'danger-medium';
+            const content = `
+                <h2>🐍 ${snake.name} 详细信息</h2>
+                <div style="background: var(--light-bg); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p><strong>危险等级：</strong><span class="danger-level ${dangerClass}">${snake.danger}</span></p>
+                    <p><strong>毒素类型：</strong>${snake.toxin}</p>
+                    <p><strong>典型症状：</strong>${snake.symptoms}</p>
+                    <p><strong>所需血清：</strong>${snake.serum}</p>
+                    <p><strong>主要分布：</strong>${snake.distribution}</p>
+                </div>
+                <div class="emergency-steps">
+                    <h3>被 ${snake.name} 咬伤后特别提醒：</h3>
+                    <ol>
+                        <li><strong>立即拨打120！</strong> 这是最重要的步骤。</li>
+                        <li>告知医生是被 <strong>${snake.name}</strong> 咬伤，以便准备对应的 <strong>${snake.serum}</strong>。</li>
+                        <li>牢记急救原则，保持冷静，等待救援。</li>
+                    </ol>
+                </div>
+            `;
+            showModal(content);
+        };
+
+        const showDonate = () => {
+            const content = `
+                <h2>💝 感谢您的支持</h2>
+                <p style="text-align: center; margin: 20px 0;">您的打赏是对我们最大的鼓励！</p>
+                <div style="text-align: center;">
+                    <img src="https://via.placeholder.com/250x250.png?text=在这里替换成您的收款码" alt="收款二维码" style="max-width: 100%;">
+                    <p style="color: var(--text-light); margin-top: 20px;">金额随意，感谢支持！</p>
+                </div>
+            `;
+            showModal(content);
+        };
+
+        const renderSnakeGrid = (keysToRender) => {
+            snakeGrid.innerHTML = ''; // 清空现有内容
+            if (keysToRender.length === 0) {
+                snakeGrid.innerHTML = '<p class="search-no-result">未找到符合条件的毒蛇信息。</p>';
+                return;
+            }
+
+            keysToRender.forEach(key => {
+                const snake = snakeData[key];
+                const dangerClass = dangerClassMap[snake.danger] || 'danger-medium';
+                const card = document.createElement('div');
+                card.className = 'snake-card';
+                card.dataset.snakeKey = key; // 使用 data-* 属性存储key
+                card.innerHTML = `
+                    <img class="snake-img" src="${snake.img}" alt="${snake.name}的图片">
+                    <div class="snake-info">
+                        <div class="snake-name">${snake.name}</div>
+                        <span class="danger-level ${dangerClass}">${snake.danger}</span>
+                        <p class="snake-toxin-type">${snake.toxin}</p>
+                    </div>
+                `;
+                snakeGrid.appendChild(card);
+            });
+        };
+
+        const searchSnake = () => {
+            const keyword = searchInput.value.trim().toLowerCase();
+            if (!keyword) {
+                renderSnakeGrid(Object.keys(snakeData)); // 如果为空，显示全部
+                return;
+            }
+
+            const filteredKeys = Object.keys(snakeData).filter(key => {
+                const snake = snakeData[key];
+                return (
+                    snake.name.toLowerCase().includes(keyword) ||
+                    snake.toxin.toLowerCase().includes(keyword) ||
+                    snake.distribution.toLowerCase().includes(keyword) ||
+                    snake.symptoms.toLowerCase().includes(keyword)
+                );
+            });
+            renderSnakeGrid(filteredKeys);
+        };
+        
+        // 4. 事件监听器设置
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始加载所有蛇类
+            renderSnakeGrid(Object.keys(snakeData));
+
+            // 事件委托：为 quick-actions 和 snake-grid 的父元素添加监听
+            document.querySelector('.quick-actions').addEventListener('click', (e) => {
+                const card = e.target.closest('.action-card');
+                if (!card) return;
+                const action = card.dataset.action;
+                if (action === 'guide') showEmergencyGuide();
+                else if (action === 'symptoms') identifyBySymptoms();
+                else if (action === 'map') showHospitalMap();
+            });
+
+            snakeGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.snake-card');
+                if (card && card.dataset.snakeKey) {
+                    showSnakeDetail(card.dataset.snakeKey);
+                }
+            });
+
+            // 独立事件绑定
+            document.getElementById('searchBtn').addEventListener('click', searchSnake);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchSnake();
+                }
+            });
+            // 实时搜索体验更好
+            searchInput.addEventListener('input', searchSnake); 
+
+            document.getElementById('donateBtn').addEventListener('click', showDonate);
+            document.getElementById('closeBtn').addEventListener('click', closeModal);
+
+            // 点击模态框外部关闭
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
